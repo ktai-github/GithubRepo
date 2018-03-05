@@ -10,6 +10,6 @@
 
 @interface Repo : NSObject
 
-@property (weak, nonatomic) NSString *repoName;
+@property (strong, nonatomic) NSString *repoName;
 
 @end
