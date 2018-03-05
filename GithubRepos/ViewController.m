@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.tableView.dataSource = self;
-  self.tableView.delegate = self;
+//  self.tableView.delegate = self;
   // Do any additional setup after loading the view, typically from a nib.
   self.reposMutableArray = [[NSMutableArray alloc] init];
 
