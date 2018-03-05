@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TableViewCell.h"
+#import "Repo.h"
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDataSource>
+@interface ViewController : UIViewController 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic) NSMutableArray *reposMutableArray;
 
 @end
 

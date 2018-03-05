@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -16,8 +16,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
   self.tableView.dataSource = self;
+  self.tableView.delegate = self;
+  // Do any additional setup after loading the view, typically from a nib.
+  self.reposMutableArray = [[NSMutableArray alloc] init];
+
   
   NSURL *url = [[NSURL alloc] initWithString:@"https://api.github.com/users/ktai-github/repos"];
   
@@ -45,10 +48,28 @@
     for (NSDictionary *repo in repos) { // 4
       NSString *repoName = repo[@"name"];
       NSLog(@"repo: %@", repoName);
+      
+      Repo *repo = [[Repo alloc] init];
+      repo.repoName = repoName;
+      [self.reposMutableArray addObject:repo];
+      
     }
+//    for (NSDictionary *repodict in self.reposMutableArray) { // 4
+//            NSLog(@"added: %@", repodict[@"name"]);
+//
+//
+//    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.tableView reloadData];
+    
+    });
+    
   }];
   
   [dataTask resume];
+  
+
 }
 
 
@@ -59,11 +80,26 @@
 
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-  <#code#>
+  TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+  
+//  NSURLSession *session = [NSURLSession sharedSession];
+
+  Repo *repo = self.reposMutableArray[indexPath.row];
+  NSLog(@"%@", repo.repoName);
+  dispatch_async(dispatch_get_main_queue(), ^{
+
+    cell.repoLabel.text = repo.repoName;
+    
+        });
+  
+  return cell;
+
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  <#code#>
+
+  return self.reposMutableArray.count;
+
 }
 
 
